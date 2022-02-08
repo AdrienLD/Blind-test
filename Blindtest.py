@@ -76,35 +76,13 @@ def creationaffichage():
     fenetre1.update()
     
 def recherche_musiques():
-    global Disney, Actuel, Vieux, Rock, Films_Series
-    Disney = os.listdir("Disney")
-    Actuel = os.listdir("Actuel")
-    Vieux = os.listdir("Vieux")
-    Rock = os.listdir("Rock")
-    Films_Series = os.listdir("Films_Series")
+    global Musiques
+    Musiques = os.listdir("Musiques")
 
 def choix_musique():
-    theme = random.randint(0, 4)
-    if (theme == 0):
-        if len(Disney) >=1:
-            musique = random.randint(0, len(Disney)-1)
-            musiques("Disney", Disney, musique)
-    elif (theme == 1):
-        if len(Actuel) >=1:
-            musique = random.randint(0, len(Actuel)-1)
-            musiques("Actuel", Actuel, musique)
-    elif (theme == 2):
-        if len(Vieux) >=1:
-            musique = random.randint(0, len(Vieux)-1)
-            musiques("Vieux", Vieux, musique)
-    elif (theme == 3):
-        if len(Rock) >=1:
-            musique = random.randint(0, len(Rock)-1)
-            musiques("Rock", Rock, musique)
-    elif (theme == 4):
-        if len(Films_Series) >=1:
-            musique = random.randint(0, len(Films_Series)-1)
-            musiques("Films_Series", Films_Series, musique)
+    if len(Musiques) >=1:
+        musique = random.randint(0, len(Musiques)-1)
+        musiques(musique)
 
 def fenetre(texte, color, temps):
     fenetre1.create_rectangle(0,0,l,h, fill= color)
@@ -113,12 +91,8 @@ def fenetre(texte, color, temps):
     fenetre1.update()
 
 def main():
-    while (len(Disney) >= 1 or len(Actuel) >= 1 or len(Vieux) >= 1 or len(Rock) >= 1 or len(Films_Series) >= 1):
-        print ("Taille de Disney : ", len(Disney))
-        print ("Taille de Actuel : ", len(Actuel))
-        print ("Taille de Vieux : ", len(Vieux))
-        print ("Taille de Rock : ", len(Rock))
-        print ("Taille de Films_Series : ", len(Films_Series))
+    while (len(liste_musiques) >= 1):
+        print ("Musiques restantes : ", len(liste_musiques))
         choix_musique()
     print("\n")
     file = open("Liste.txt", "w")
@@ -127,12 +101,11 @@ def main():
         file.write("&")
     file.close()
 
-def musiques(nom, theme, musique):
-    global pos
-    titre = nom + "/" + str(theme[musique])
+def musiques(musique):
+    titre = Musiques[musique]
     print (titre)
     liste_musiques.append(titre)
-    del theme[musique]
+    del Musiques[musique]
     
     
 def mettre_musique():
@@ -205,7 +178,7 @@ def mettre_musique():
 affichagedebut()
 recherche_musiques()
 creationaffichage()
-print(Disney, Actuel, Vieux, Rock, Films_Series)
+print(Musiques)
 #main()
 mettre_musique()
 
