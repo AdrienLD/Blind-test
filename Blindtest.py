@@ -1,3 +1,8 @@
+#   Author  :   Adrien LD
+#   Date    :   08/02/2022
+#   Desc    :   Ultimate Buvery
+
+
 import pygame
 import time
 import keyboard
@@ -22,7 +27,7 @@ j2 = "p"
 j3 = "j"
 j4 = "f"
 
-def affichagedebut():
+def affichagedebut():           #Creates the first view in tkinter
     global nombre_joueurs
     i = 1
     while i:
@@ -47,122 +52,110 @@ def affichagedebut():
 
     
 
-def creationaffichage():
+def creationaffichage():               #Creates the tkinter window qith the number of players
     fenetre1.delete(ALL)
+    fenetre1.create_rectangle(0,0,l,h, fill="black")
     if nombre_joueurs == 1:
-        fenetre1.create_rectangle(0,0,l,h, fill="#ff0000")
-        fenetre1.create_text(l/2, h/2, text = j1, fill = "black", font=("Constantia", 40))
+        fenetre1.create_text(l/2, h/2, text = j1, fill = "#ff0000", font=("Impact", 80))
     elif nombre_joueurs == 2:
-        fenetre1.create_rectangle(0,0,l/2,h, fill="#ff0000")
-        fenetre1.create_rectangle(l/2,0,l,h, fill="#00ff00")
-        fenetre1.create_text(l/4, h/2, text = j1, fill = "black", font=("Constantia", 40))
-        fenetre1.create_text(3*l/4, h/2, text = j2, fill = "black", font=("Constantia", 40))
+        fenetre1.create_text(l/4, h/2, text = j1, fill = "#ff0000", font=("Impact", 80))
+        fenetre1.create_text(3*l/4, h/2, text = j2, fill = "#00ff00", font=("Impact", 80))
     elif nombre_joueurs == 3:
-        fenetre1.create_rectangle(0,0,l/3,h, fill="#ff0000")
-        fenetre1.create_rectangle(l/3,0,2*l/3,h, fill="#00ff00")
-        fenetre1.create_rectangle(2*l/3,0,l,h, fill="#0000ff")
-        fenetre1.create_text(l/6, h/2, text = j1, fill = "black", font=("Constantia", 40))
-        fenetre1.create_text(3*l/6, h/2, text = j2, fill = "black", font=("Constantia", 40))
-        fenetre1.create_text(5*l/6, h/2, text = j3, fill = "black", font=("Constantia", 40))
+        fenetre1.create_text(l/6, h/2, text = j1, fill = "#ff0000", font=("Impact", 80))
+        fenetre1.create_text(3*l/6, h/2, text = j2, fill = "#00ff00", font=("Impact", 80))
+        fenetre1.create_text(5*l/6, h/2, text = j3, fill = "#0000ff", font=("Impact", 80))
     elif nombre_joueurs == 4:
-        fenetre1.create_rectangle(0,0,l/2,h/2, fill="#ff0000")
-        fenetre1.create_rectangle(l/2,0,l,h/2, fill="#00ff00")
-        fenetre1.create_rectangle(0,h/2,l/2,h, fill="#0000ff")
-        fenetre1.create_rectangle(l/2,h/2,l,h, fill="#fff000")
-        fenetre1.create_text(l/4, h/4, text = j1, fill = "black", font=("Constantia", 40))
-        fenetre1.create_text(3*l/4, h/4, text = j2, fill = "black", font=("Constantia", 40))
-        fenetre1.create_text(l/4, 3*h/4, text = j3, fill = "black", font=("Constantia", 40))
-        fenetre1.create_text(3*l/4, 3*h/4, text = j4, fill = "black", font=("Constantia", 40))
+        fenetre1.create_text(l/4, h/4, text = j1, fill = "#ff0000", font=("Impact", 80))
+        fenetre1.create_text(3*l/4, h/4, text = j2, fill = "#00ff00", font=("Impact", 80))
+        fenetre1.create_text(l/4, 3*h/4, text = j3, fill = "#0000ff", font=("Impact", 80))
+        fenetre1.create_text(3*l/4, 3*h/4, text = j4, fill = "#fff000", font=("Impact", 80))
     fenetre1.update()
     
-def recherche_musiques():
+def recherche_musiques():           #Scan the Musiques folder
     global Musiques
     Musiques = os.listdir("Musiques")
 
-def choix_musique():
-    if len(Musiques) >=1:
-        musique = random.randint(0, len(Musiques)-1)
-        musiques(musique)
-
-def fenetre(texte, color, temps):
-    fenetre1.create_rectangle(0,0,l,h, fill= color)
-    fenetre1.create_text(l/2, h/9, text = texte, fill = "black", font=("Bahnschrift", 70))
-    fenetre1.create_text(l/2, 2*h/3, text = str(temps)[:4], fill = "black", font=("Fixedsys", 40))
-    fenetre1.update()
-
-def main():
-    while (len(liste_musiques) >= 1):
-        print ("Musiques restantes : ", len(liste_musiques))
-        choix_musique()
-    print("\n")
+def main():                         #Creates the random playlist in Liste.txt
+    while (len(Musiques) >= 1):
+        musiqueajouter = random.randint(0, len(Musiques)-1)
+        musiques(musiqueajouter)
+    print("Playlist aléatoire créée !\n")
     file = open("Liste.txt", "w")
     for i in range (len(liste_musiques)):
         file.write(liste_musiques[i])
         file.write("&")
     file.close()
+    print("Playlist aléatoire sauvegardée !\n")
 
-def musiques(musique):
-    titre = Musiques[musique]
-    print (titre)
+def musiques(musiqueajouter):       #Add musics to the playlist
+    titre = Musiques[musiqueajouter]
     liste_musiques.append(titre)
-    del Musiques[musique]
+    del Musiques[musiqueajouter]
     
-    
+
+def fenetre(texte, color, temps):      
+    fenetre1.create_rectangle(0,0,l,h, fill= color)
+    fenetre1.create_text(l/2, h/9, text = texte, fill = "white", font=("Bahnschrift", 70))
+    fenetre1.create_text(l/2, 2*h/3, text = str(temps)[:4], fill = "white", font=("Fixedsys", 40))
+    fenetre1.update()  
+
 def mettre_musique():
     file = open("Liste.txt", "r")
-    liste_des_musiques = file.read().split("&")
+    string = file.read()
+    liste_des_musiques = string.split("&")
     file.close()
+    print("Playlist aléatoire trouvée dans Liste.txt !\n")
     for i in range (len(liste_des_musiques)):
         reponse = 0
         j = 1
         temps = 0
         debutdelai = 0
         print (liste_des_musiques[i])
-        pygame.mixer.music.load(liste_des_musiques[i])
+        music = "Musiques/" + liste_des_musiques[i]
+        pygame.mixer.music.load(music)
         pygame.mixer.music.play()
         time.sleep(.1)
         pygame.mixer.music.pause()
-        if "Rock" in liste_des_musiques[i]:
-            texte = "Indice : Rock"
-        if "Disney" in liste_des_musiques[i]:
-            texte = "Indice : Disney"
-        if "Actuel" in liste_des_musiques[i]:
-            texte = "Indice : Actuel"
-        if "Vieux" in liste_des_musiques[i]:
-            texte = "Indice : Vieux"
-        if "Films_Series" in liste_des_musiques[i]:
-            texte = "Indice : Films_Series"
-        fenetre1.create_text(l/2, h/9, text = texte, fill = "black", font=("Bahnschrift", 70))
+        index = liste_musiques[i].index(" - ")
+        texte = liste_musiques[i]
+        texte = texte[:index]
+        fenetre1.create_text(l/2, h/9, text = texte, fill = "white", font=("Bahnschrift", 70))
         fenetre1.update()
         while j:
             if keyboard.is_pressed(j1) and reponse:
+                print("PAUSE - Joueur 1")
                 pygame.mixer.music.pause()
                 findelai = time.time()
                 temps += findelai - debutdelai
                 fenetre(texte, "#ff0000", temps)
                 reponse = 0
             if keyboard.is_pressed(j2) and reponse:
+                print("PAUSE - Joueur 2")
                 pygame.mixer.music.pause()
                 findelai = time.time()
                 temps += findelai - debutdelai
                 fenetre(texte, "#00ff00", temps)
                 reponse = 0
             if keyboard.is_pressed(j3) and reponse:
+                print("PAUSE - Joueur 3")
                 pygame.mixer.music.pause()
                 findelai = time.time()
                 temps += findelai - debutdelai
                 fenetre(texte, "#0000ff", temps)
                 reponse = 0
             if keyboard.is_pressed(j4) and reponse:
+                print("PAUSE - Joueur 4")
                 pygame.mixer.music.pause()
                 findelai = time.time()
                 temps += findelai - debutdelai
                 fenetre(texte, "#fff000", temps)
                 reponse = 0
             if keyboard.is_pressed("0"):
+                print("PLAY")
+                time.sleep(.1)
                 pygame.mixer.music.unpause()
                 creationaffichage()
-                fenetre1.create_text(l/2, h/9, text = texte, fill = "black", font=("Bahnschrift", 70))
+                fenetre1.create_text(l/2, h/9, text = texte, fill = "white", font=("Bahnschrift", 70))
                 fenetre1.update()
                 reponse = 1
                 debutdelai = time.time()
@@ -177,9 +170,8 @@ def mettre_musique():
 
 affichagedebut()
 recherche_musiques()
+main()
 creationaffichage()
-print(Musiques)
-#main()
 mettre_musique()
 
 
