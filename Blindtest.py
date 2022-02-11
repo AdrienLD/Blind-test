@@ -1,6 +1,6 @@
 #   Author  :   Adrien LD
 #   Date    :   08/02/2022
-#   Desc    :   Ultimate Buvery
+#   Desc    :   Blind test
 
 
 import pygame
@@ -9,6 +9,7 @@ import keyboard
 from tkinter import * 
 import os
 import random
+from PIL import Image, ImageTk
 
 nombre_joueurs = 4
 l = 1706
@@ -49,26 +50,23 @@ def affichagedebut():           #Creates the first view in tkinter
             i = 0
             nombre_joueurs = 4
 
-
-    
-
 def creationaffichage():               #Creates the tkinter window qith the number of players
     fenetre1.delete(ALL)
-    fenetre1.create_rectangle(0,0,l,h, fill="black")
+    fenetre1.create_rectangle(0,0,l,h, fill="grey")
     if nombre_joueurs == 1:
-        fenetre1.create_text(l/2, h/2, text = j1, fill = "#ff0000", font=("Impact", 80))
+        fenetre1.create_text(l/2, h/2, text = j1.upper(), fill = "#ff0000", font=("Impact", 80))
     elif nombre_joueurs == 2:
-        fenetre1.create_text(l/4, h/2, text = j1, fill = "#ff0000", font=("Impact", 80))
-        fenetre1.create_text(3*l/4, h/2, text = j2, fill = "#00ff00", font=("Impact", 80))
+        fenetre1.create_text(l/4, h/2, text = j1.upper(), fill = "#ff0000", font=("Impact", 80))
+        fenetre1.create_text(3*l/4, h/2, text = j2.upper(), fill = "#00ff00", font=("Impact", 80))
     elif nombre_joueurs == 3:
-        fenetre1.create_text(l/6, h/2, text = j1, fill = "#ff0000", font=("Impact", 80))
-        fenetre1.create_text(3*l/6, h/2, text = j2, fill = "#00ff00", font=("Impact", 80))
-        fenetre1.create_text(5*l/6, h/2, text = j3, fill = "#0000ff", font=("Impact", 80))
+        fenetre1.create_text(l/6, h/2, text = j1.upper(), fill = "#ff0000", font=("Impact", 80))
+        fenetre1.create_text(3*l/6, h/2, text = j2.upper(), fill = "#00ff00", font=("Impact", 80))
+        fenetre1.create_text(5*l/6, h/2, text = j3.upper(), fill = "#0000ff", font=("Impact", 80))
     elif nombre_joueurs == 4:
-        fenetre1.create_text(l/4, h/4, text = j1, fill = "#ff0000", font=("Impact", 80))
-        fenetre1.create_text(3*l/4, h/4, text = j2, fill = "#00ff00", font=("Impact", 80))
-        fenetre1.create_text(l/4, 3*h/4, text = j3, fill = "#0000ff", font=("Impact", 80))
-        fenetre1.create_text(3*l/4, 3*h/4, text = j4, fill = "#fff000", font=("Impact", 80))
+        fenetre1.create_text(l/4, h/4, text = j1.upper(), fill = "#ff0000", font=("Impact", 80))
+        fenetre1.create_text(3*l/4, h/4, text = j2.upper(), fill = "#00ff00", font=("Impact", 80))
+        fenetre1.create_text(l/4, 3*h/4, text = j3.upper(), fill = "#0000ff", font=("Impact", 80))
+        fenetre1.create_text(3*l/4, 3*h/4, text = j4.upper(), fill = "#fff000", font=("Impact", 80))
     fenetre1.update()
     
 def recherche_musiques():           #Scan the Musiques folder
@@ -120,6 +118,8 @@ def mettre_musique():
         texte = liste_musiques[i]
         texte = texte[:index]
         fenetre1.create_text(l/2, h/9, text = texte, fill = "white", font=("Bahnschrift", 70))
+        picture = image(texte)
+        images = fenetre1.create_image((l/2, h/3), image=picture)
         fenetre1.update()
         while j:
             if keyboard.is_pressed(j1) and reponse:
@@ -156,6 +156,7 @@ def mettre_musique():
                 pygame.mixer.music.unpause()
                 creationaffichage()
                 fenetre1.create_text(l/2, h/9, text = texte, fill = "white", font=("Bahnschrift", 70))
+                image(texte)
                 fenetre1.update()
                 reponse = 1
                 debutdelai = time.time()
@@ -167,6 +168,12 @@ def mettre_musique():
                 
         print("Nouvelle musique")
 
+def image(texte):
+    picture = Image.open ('Photos/' + texte + '.png')
+    picture = picture.resize((int(h/6),int(h/6)))
+    picture2 = ImageTk.PhotoImage(picture) 
+    return picture2
+    
 
 affichagedebut()
 recherche_musiques()
